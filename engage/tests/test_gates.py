@@ -101,6 +101,40 @@ class TestCapstackNumericProvenance(unittest.TestCase):
         self.assertFalse(r.passed)
 
 
+class TestMetaTextLayer(unittest.TestCase):
+    """A backend refusal is well-formed text with no figures and no blocked
+    terms; without this layer it lands PENDING (observed live 2026-08-19)."""
+
+    def setUp(self):
+        self.ctx = ctx_for("capstack")
+
+    def assert_blocked(self, text):
+        r = run_gates(text, self.ctx, source_texts=(text,), llm=pass_llm)
+        self.assertFalse(r.passed, f"should have blocked: {text!r}")
+        self.assertTrue(any("meta-text" in s for s in r.reasons), r.reasons)
+
+    def test_refusal_blocked(self):
+        self.assert_blocked("I can't write this reply. It asks me to speak in "
+                            "first person as a specific real person.")
+        self.assert_blocked("I'm sorry, but I am unable to help with that request.")
+        self.assert_blocked("I cannot generate content impersonating a real individual.")
+
+    def test_prompt_machinery_commentary_blocked(self):
+        self.assert_blocked("I don't have any source material provided in this "
+                            "conversation (no voice guide, no real deal numbers).")
+        self.assert_blocked("Since no voice guide was supplied, here is a generic take.")
+
+    def test_ai_meta_text_blocked(self):
+        self.assert_blocked("As an AI, I don't have personal deal experience.")
+        self.assert_blocked("I'm a language model and can't verify these figures.")
+
+    def test_first_person_emphasis_passes(self):
+        text = ("I can't stress this enough: the promote is negotiated before "
+                "the money shows up, not after.")
+        r = run_gates(text, self.ctx, source_texts=(text,), llm=pass_llm)
+        self.assertTrue(r.passed, r.reasons)
+
+
 class TestEmpiresSourceClaims(unittest.TestCase):
     def setUp(self):
         self.ctx = ctx_for("empires")

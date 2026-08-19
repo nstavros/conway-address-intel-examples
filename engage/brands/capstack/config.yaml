@@ -50,7 +50,7 @@ voice:
     - "the seat you can actually take"
     - "Comment GAP"
   reply_angles:
-    - "answer the actual question with a specific mechanism and a real number from experience — teach the thing"
+    - "answer the actual question with a specific mechanism — teach the thing; cite a real number only if the provided material contains one"
     - "reframe the question to the decision that actually matters, then answer that"
 
 scoring:

@@ -54,9 +54,41 @@ engage publish --brand capstack
 engage digest
 ```
 
+## The weekly loop
+
+```bash
+# Fan one piece of source material out to platform-native variants.
+# The reuse ledger refuses recycling a material on the same platform inside
+# listening.reuse_window_days (default 45) — one shot, one use.
+engage repurpose --brand capstack --material-id cove1 --backend-cmd "your-llm-cli"
+
+# Triage comments on our own posts: HUMAN (owner answers personally),
+# DRAFTABLE (on-topic question for the pipeline), SKIP — plus theme mining.
+engage triage --brand capstack --file comments.json
+# comments.json: [{"id": "c1", "author": "handle", "text": "..."}]
+
+# Record performance pulls (manual numbers are fine) — recomputes
+# performance_norm vs the brand median, which feeds the scorer's history term.
+engage measure --brand capstack --file metrics.json
+# metrics.json: [{"post_id": "<draft-id>", "views": 1200, "likes": 40}]
+
+# Attribute signups to published posts by the code they used (funnel brands only)
+engage measure --brand capstack --signups signups.json
+# signups.json: [{"code": "GAP", "ts": 1755640000}]
+
+# Weekly report: cadence vs actual, queue state, best/worst performer,
+# and exactly ONE recommendation
+engage weekly --brand capstack
+```
+
 `--backend-cmd` is any shell command that reads a prompt on stdin and writes a
 completion on stdout. Without one, the LLM safety gate **fails closed**: the
-draft lands as BLOCKED, never PENDING.
+draft lands as BLOCKED, never PENDING. A ready-made wrapper for the local
+Claude CLI ships as [backend-claude.sh](backend-claude.sh):
+
+```bash
+engage draft-reply --brand capstack --post-id x-101 --backend-cmd ./backend-claude.sh
+```
 
 ## Brand layout
 

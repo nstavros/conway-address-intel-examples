@@ -29,7 +29,9 @@ def submit(store: Store, ctx: BrandContext, draft: Draft,
     draft.status = "PENDING" if result.passed else "BLOCKED"
     draft.gate_reasons = result.reasons
     store.save_draft(draft)
-    if draft.material_id:
+    # a BLOCKED draft never approaches publishing, so it must not burn the
+    # material's one-use slot for its platform — only viable drafts count
+    if draft.material_id and draft.status == "PENDING":
         store.record_material_use(draft.material_id, draft.id, draft.platform)
     return draft
 

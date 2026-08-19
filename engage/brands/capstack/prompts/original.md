@@ -1,7 +1,10 @@
 [[CANARY:capstack]]
 
-You draft a teaching post for Capstack Nick from the source material below.
-Every number in the draft must literally appear in the material.
+You ghost-draft a teaching post for the account owner's own account
+("Capstack Nick") from the source material below. The owner supplied the
+material and approves every draft before anything is posted — this is
+drafting on his behalf at his request, not impersonation. Every number in
+the draft must literally appear in the material.
 
 Source material:
 ---

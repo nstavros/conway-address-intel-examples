@@ -15,11 +15,15 @@ from .config import discover_brands, load_brand
 from .core.models import Draft, SourceMaterial, new_id
 from .core.store import Store
 from .drafting.replies import draft_replies
+from .drafting.repurpose import repurpose as repurpose_material
 from .funnel.classifier import FunnelViolation, check_week
 from .ingest.chatplace import ChatplaceMediaSource
 from .ingest.manual import ManualSource
+from .measure.collector import attribute_signups, record_performance
 from .publish.publisher import DryRunSink, publish
 from .report.digest import build_digest
+from .report.weekly import build_weekly
+from .triage.comments import mine_themes, triage_comments
 from .scoring.scorer import score_post
 
 
@@ -137,6 +141,70 @@ def cmd_submit(args):
         print(f"    {r}")
 
 
+def cmd_repurpose(args):
+    ctx, store = _load(args)
+    material = store.get_material(args.material_id)
+    if material is None:
+        raise SystemExit(f"no material {args.material_id} — add with: engage material")
+    backend = _cmd_backend(args.backend_cmd) if args.backend_cmd else _stub_backend
+    llm = backend if args.backend_cmd else None
+    platforms = args.platforms.split(",") if args.platforms else None
+    drafts, skipped = repurpose_material(store, ctx, material, backend, platforms)
+    for p in skipped:
+        print(f"[{ctx.name}] {p}: skipped — material used there inside the reuse window")
+    for d in drafts:
+        submit(store, ctx, d, (material["text"],), llm)
+        print(f"[{ctx.name}] draft {d.id} ({d.platform}) -> {d.status}")
+        if d.gate_reasons:
+            print(f"    gates: {d.gate_reasons}")
+        print(f"    {d.text[:160]}")
+    if not drafts and not skipped:
+        print(f"[{ctx.name}] no eligible platforms")
+
+
+def cmd_triage(args):
+    ctx, _store = _load(args)
+    comments = json.loads(Path(args.file).read_text(encoding="utf-8"))
+    results = triage_comments(comments, ctx)
+    for cls in ("HUMAN", "DRAFTABLE", "SKIP"):
+        group = [r for r in results if r.cls == cls]
+        if not group:
+            continue
+        print(f"{cls} ({len(group)}):")
+        for r in group:
+            print(f"  @{r.author}: {r.text[:80]}")
+            print(f"      -> {r.reason}")
+    themes = mine_themes(comments, ctx)
+    if themes:
+        print("Themes the audience keeps raising:")
+        for topic, n in themes:
+            print(f"  {n}x {topic}")
+
+
+def cmd_measure(args):
+    ctx, store = _load(args)
+    if args.signups:
+        rows = json.loads(Path(args.signups).read_text(encoding="utf-8"))
+        results = attribute_signups(store, ctx, rows)
+        matched = [r for r in results if r["draft_id"]]
+        print(f"[{ctx.name}] {len(matched)}/{len(results)} signups attributed")
+        for r in results:
+            target = f"{r['draft_id']} ({r['platform']})" if r["draft_id"] else "UNMATCHED"
+            print(f"  code={r['code']} -> {target}")
+    if args.file:
+        rows = json.loads(Path(args.file).read_text(encoding="utf-8"))
+        report = record_performance(store, ctx, rows)
+        print(f"[{ctx.name}] recorded {report['recorded']} metric values; "
+              f"normalized {report['normalized']} posts on '{report['headline_metric']}'")
+    if not args.file and not args.signups:
+        raise SystemExit("pass --file metrics.json and/or --signups signups.json")
+
+
+def cmd_weekly(args):
+    ctx, store = _load(args)
+    print(build_weekly(ctx, store))
+
+
 def cmd_queue(args):
     ctx, store = _load(args)
     if args.action == "list":
@@ -237,6 +305,24 @@ def main(argv=None):
     sp.add_argument("--platform", required=True)
     sp.add_argument("--material-id", default="")
     sp.add_argument("--backend-cmd", default="")
+
+    sp = brand_cmd("repurpose", cmd_repurpose)
+    sp.add_argument("--material-id", required=True)
+    sp.add_argument("--backend-cmd", default="")
+    sp.add_argument("--platforms", default="",
+                    help="comma-separated subset; default: all brand platforms")
+
+    sp = brand_cmd("triage", cmd_triage)
+    sp.add_argument("--file", required=True,
+                    help="JSON list of comments: [{id, author, text}]")
+
+    sp = brand_cmd("measure", cmd_measure)
+    sp.add_argument("--file", default="",
+                    help="JSON metric rows: [{post_id, views: N, likes: N, ...}]")
+    sp.add_argument("--signups", default="",
+                    help="JSON signup rows: [{code, ts}]")
+
+    brand_cmd("weekly", cmd_weekly)
 
     sp = brand_cmd("queue", cmd_queue)
     sp.add_argument("action", choices=["list", "show", "approve", "edit"])
