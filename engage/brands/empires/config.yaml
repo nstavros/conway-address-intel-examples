@@ -3,6 +3,11 @@ brand: empires
 priority: high
 platforms: [instagram, youtube, tiktok]
 
+listening:
+  # youtube.com/@empiresegos — verified 2026-08-19 via the handle's own page.
+  # NOTE: @EmpiresandEgos is a DIFFERENT PERSON's channel; never swap these.
+  youtube_channel_id: UC9772FnuAXMVabS0gtr6cew
+
 watch:
   # peer/competitor channels from the 2026-08 research roadmap — tier B: engage
   # thoughtfully, never spam. Add tier-A accounts (collab targets, big

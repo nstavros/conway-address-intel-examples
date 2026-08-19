@@ -22,10 +22,17 @@ entry point). Brand configs are discovered under `./brands` (override with
 ## The daily loop
 
 ```bash
-# 1. Ingest — from a Chatplace MCP export of our own posts, or a manual JSON
-#    file of third-party posts worth considering
+# 1. Ingest — three sources:
+#    manual:    JSON file of third-party posts worth considering (listening)
+#    chatplace: JSON file of our own IG posts in the Chatplace export shape
+#               (legacy format parser — the Chatplace service itself is no
+#               longer used; saved exports live in brands/<name>/data/)
+#    youtube:   the channel's public RSS feed, fetched live — no API key.
+#               Repeated ingests append view-count snapshots (drives momentum).
+#               Needs listening.youtube_channel_id in the brand config.
 engage ingest --brand capstack --source manual   --file listening.json
-engage ingest --brand capstack --source chatplace --file our_media.json
+engage ingest --brand empires  --source chatplace --file brands/empires/data/ig_export_2026-08-19.json
+engage ingest --brand empires  --source youtube
 
 # 2. Score and rank opportunities (auditable components stored per post)
 engage score --brand capstack

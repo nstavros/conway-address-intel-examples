@@ -19,6 +19,7 @@ from .drafting.repurpose import repurpose as repurpose_material
 from .funnel.classifier import FunnelViolation, check_week
 from .ingest.chatplace import ChatplaceMediaSource
 from .ingest.manual import ManualSource
+from .ingest.youtube_rss import YouTubeRSSSource
 from .measure.collector import attribute_signups, record_performance
 from .publish.publisher import DryRunSink, publish
 from .report.digest import build_digest
@@ -64,16 +65,25 @@ def cmd_brands(args):
 
 def cmd_ingest(args):
     ctx, store = _load(args)
+    if args.source in ("manual", "chatplace") and not args.file:
+        raise SystemExit(f"--file is required for source {args.source}")
     if args.source == "manual":
         src = ManualSource(ctx.name, args.file)
     elif args.source == "chatplace":
         src = ChatplaceMediaSource(ctx.name, args.file)
+    elif args.source == "youtube":
+        channel = (ctx.config.get("listening") or {}).get("youtube_channel_id", "")
+        if not args.file and not channel:
+            raise SystemExit("youtube source needs listening.youtube_channel_id "
+                             "in the brand config, or --file with a saved feed XML")
+        src = YouTubeRSSSource(ctx.name, channel_id=channel, path=args.file)
     else:
         raise SystemExit(f"unknown source {args.source}")
     posts = src.poll()
     for p in posts:
         store.upsert_post(p)
-    print(f"[{ctx.name}] ingested {len(posts)} posts from {args.file}")
+    print(f"[{ctx.name}] ingested {len(posts)} posts from "
+          f"{args.file or 'live feed'}")
 
 
 def cmd_score(args):
@@ -281,8 +291,10 @@ def main(argv=None):
     sub.add_parser("brands").set_defaults(fn=cmd_brands)
 
     sp = brand_cmd("ingest", cmd_ingest)
-    sp.add_argument("--source", choices=["manual", "chatplace"], required=True)
-    sp.add_argument("--file", required=True)
+    sp.add_argument("--source", choices=["manual", "chatplace", "youtube"], required=True)
+    sp.add_argument("--file", default="",
+                    help="required for manual/chatplace; optional for youtube "
+                         "(defaults to fetching the configured channel's live feed)")
 
     brand_cmd("score", cmd_score)
 
