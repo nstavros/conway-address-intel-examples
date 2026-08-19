@@ -1,0 +1,117 @@
+# Capstack Nick — teaching account. Goal: followers -> email list -> product sales.
+brand: capstack
+priority: high
+platforms: [x, linkedin, instagram, tiktok]
+
+watch:
+  # Fill with the accounts you actually want engaged: CRE educators, sponsors,
+  # brokers, junior-developer communities. Tier A = high-value relationships.
+  accounts: []
+  blocked_accounts: []
+  keywords:
+    - real estate development
+    - co-gp
+    - promote
+    - lp equity
+    - construction loan
+    - underwriting
+    - pro forma
+    - cap rate
+    - ground-up
+    - adaptive reuse
+    - hotel development
+    - multifamily
+    - capital stack
+    - first deal
+    - sponsor
+  hashtags:
+    - "#realestatedevelopment"
+    - "#cre"
+    - "#realestateinvesting"
+  # questions matching these topics get the question multiplier — answered
+  # questions are the top of the funnel
+  teachable_topics:
+    - how to break into development
+    - co-gp
+    - promote
+    - deal structure
+    - raise equity
+    - underwrite
+    - contingency
+    - construction loan
+    - first deal
+    - capital stack
+    - fees
+
+voice:
+  prompt_dir: prompts
+  signature_phrases:
+    - "Match yourself to the money"
+    - "the seat you can actually take"
+    - "Comment GAP"
+  reply_angles:
+    - "answer the actual question with a specific mechanism and a real number from experience — teach the thing"
+    - "reframe the question to the decision that actually matters, then answer that"
+
+scoring:
+  weights: {relevance: 0.40, author_value: 0.15, recency: 0.15, momentum: 0.15, history: 0.15}
+  question_multiplier: 1.5
+  cooldown_days: 7
+  momentum_baseline_per_hour: 25
+  half_life_hours: {x: 6, linkedin: 48, instagram: 24, tiktok: 8}
+
+blocks:
+  llm_gate: required
+  # any figure in a draft must literally appear in the linked source material
+  numeric_provenance: true
+  claims_require_source: false
+  regex:
+    - '\bguaranteed?\s+(return|profit|outcome|income)\b'
+    - '\byou (should|need to) (buy|invest in|put money into)\b'
+    - '\brisk[- ]free\b'
+    - "\\bcan'?t lose\\b"
+    - '\bget rich\b'
+  topics:
+    - specific investment advice (what a particular person should invest in)
+    - guaranteed or promised outcomes
+    - deal figures not present in the provided source material
+    - guru energy, gatekeeping, fake scarcity
+
+funnel:
+  ratio: {top: 0.60, middle: 0.30, bottom: 0.10}
+  patterns:
+    bottom:
+      - '\bbuy\b'
+      - '\benroll\b'
+      - '\bprice\b'
+      - '\bcourse\b'
+      - '\bcheckout\b'
+      - 'link in bio to (buy|purchase|enroll|join)'
+    middle:
+      - '\bcomment (gap|capstack)\b'
+      - '\bsave this\b'
+      - '\bswipe\b'
+      - '\bthe mechanism\b'
+      - '\bhow to\b'
+      - "\\bhere'?s the\\b"
+  products:
+    - id: gap-map
+      name: "Who's-Who Deal Map (GAP lead magnet)"
+      kind: lead_magnet
+      topics: [co-gp, deal structure, seats, first deal]
+    - id: capstack-tape
+      name: "The Tape (deal flow commentary)"
+      kind: content_series
+      topics: [construction loan, capital stack, who funds development]
+
+cadence:
+  x: "5-7/week"
+  linkedin: "3/week"
+  instagram: "3-4/week"
+  tiktok: "2-3/week repurposed"
+
+rate_limits:
+  x: {posts_per_day: 3, replies_per_day: 15}
+  linkedin: {posts_per_day: 1, replies_per_day: 10}
+  instagram: {posts_per_day: 2, replies_per_day: 10}
+  tiktok: {posts_per_day: 1, replies_per_day: 5}

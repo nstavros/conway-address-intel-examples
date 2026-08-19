@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+brands/*/data/
+*.egg-info/

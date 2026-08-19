@@ -1,0 +1,83 @@
+# Empires and Egos — history channels. Goal: raw growth (views, watch time, subs).
+brand: empires
+priority: high
+platforms: [instagram, youtube, tiktok]
+
+watch:
+  # peer/competitor channels from the 2026-08 research roadmap — tier B: engage
+  # thoughtfully, never spam. Add tier-A accounts (collab targets, big
+  # history creators who reply) as they emerge.
+  accounts:
+    - {handle: "Majestic Studios", tier: B}
+    - {handle: "History Time", tier: B}
+    - {handle: "Kings & Generals", tier: B}
+    - {handle: "Fall of Civilizations", tier: B}
+    - {handle: "Historia Civilis", tier: B}
+    - {handle: "Extra History", tier: B}
+    - {handle: "ColdFusion", tier: B}
+    - {handle: "This Is History", tier: B}
+  blocked_accounts: []
+  keywords:
+    - roman empire
+    - ancient rome
+    - fall of rome
+    - byzantine
+    - constantinople
+    - ottoman
+    - bronze age collapse
+    - ancient greece
+    - sparta
+    - alexander the great
+    - hannibal
+    - julius caesar
+    - tulip mania
+    - east india company
+    - why empires fall
+    - history documentary
+  hashtags:
+    - "#ancienthistory"
+    - "#romanempire"
+    - "#historytok"
+    - "#ancientrome"
+
+voice:
+  prompt_dir: prompts
+  signature_phrases:
+    - "Every empire dies wearing someone else's clothes"
+    - "And here's the part nobody tells you"
+  reply_angles:
+    - "add a concrete, sourced historical detail the post missed — an object, a number, a date"
+    - "pose the strongest historically-contested counterpoint as a question that invites argument"
+
+scoring:
+  weights: {relevance: 0.25, author_value: 0.05, recency: 0.25, momentum: 0.35, history: 0.10}
+  question_multiplier: 1.0
+  cooldown_days: 7
+  momentum_baseline_per_hour: 200   # history content moves fast when it moves
+  half_life_hours: {instagram: 24, tiktok: 8, youtube: 72}
+
+blocks:
+  llm_gate: required
+  # every factual assertion must trace to provided source material
+  claims_require_source: true
+  numeric_provenance: true
+  regex:
+    # monetization line: historical analysis yes, present-day political claims no
+    - '\b(Trump|Biden|Harris|MAGA|Democrat|Republican|left-wing|right-wing)\b'
+    - '\b(America|the US|the United States) is (collapsing|falling|next)\b'
+  topics:
+    - historical claims not present in the provided script or source notes
+    - present-day political controversy stated as our claim (a question inviting
+      comments is allowed; an assertion is not)
+    - academic hedging or clickbait lies
+    - engagement-bait unrelated to history
+
+cadence:
+  instagram: "1 reel/day"
+  tiktok: "1/day cross-post"
+  youtube: "shorts 2-3/week (Evolution format won the A/B); long-form ~1/month"
+
+rate_limits:
+  instagram: {posts_per_day: 2, replies_per_day: 10}
+  tiktok: {posts_per_day: 2, replies_per_day: 10}
+  youtube: {posts_per_day: 1, replies_per_day: 20}
