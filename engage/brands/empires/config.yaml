@@ -9,19 +9,44 @@ listening:
   youtube_channel_id: UC9772FnuAXMVabS0gtr6cew
 
 watch:
-  # peer/competitor channels from the 2026-08 research roadmap — tier B: engage
-  # thoughtfully, never spam. Add tier-A accounts (collab targets, big
-  # history creators who reply) as they emerge.
+  # YouTube peer/competitor CHANNELS (display names, not handles) from the
+  # 2026-08 research roadmap — competitive awareness only. These never match
+  # an Instagram post author, so they don't feed IG scoring; kept for context.
+  # accounts:
+  #   - {handle: "Majestic Studios", tier: B}
+  #   - {handle: "History Time", tier: B}
+  #   - {handle: "Kings & Generals", tier: B}
+  #   - {handle: "Fall of Civilizations", tier: B}
+  #   - {handle: "Historia Civilis", tier: B}
+  #   - {handle: "Extra History", tier: B}
+  #   - {handle: "ColdFusion", tier: B}
+  #   - {handle: "This Is History", tier: B}
+  #
+  # Instagram engagement targets, verified live 2026-08-19 (follower/following
+  # read off each profile). Same-niche: all are AI-generated/illustrated
+  # history content, the actual peer group for @empires.and.egos.
+  #   A = reciprocal (low follower:following ratio) — engage AND follow.
+  #   B = comment venues (broadcasters, ratio 100:1+) — comment only, no follow.
   accounts:
-    - {handle: "Majestic Studios", tier: B}
-    - {handle: "History Time", tier: B}
-    - {handle: "Kings & Generals", tier: B}
-    - {handle: "Fall of Civilizations", tier: B}
-    - {handle: "Historia Civilis", tier: B}
-    - {handle: "Extra History", tier: B}
-    - {handle: "ColdFusion", tier: B}
-    - {handle: "This Is History", tier: B}
-  blocked_accounts: []
+    - {handle: historictalesthroughtime, tier: A}  # 320/1,136 (3.6:1) best reciprocity in the niche
+    - {handle: ki_zeitreise, tier: A}               # 76.2K/599 German AI-history creator, cross-collabs with timemap.app
+    - {handle: historyaiillustration, tier: B}      # 255K/0 largest same-niche AI-history account
+    - {handle: imperiumarchive_, tier: B}           # 87.1K/0 Rome/Byzantium/Templar AI-history
+    - {handle: aiwh_atever, tier: B}                # 126K/221 — CAUTION: some posts (e.g. Persia) draw
+                                                     #   toxic political comment threads; skip those, engage others
+    - {handle: historicalfrontiers, tier: B}        # 42.8K/12 broad AI-history content
+    - {handle: historicalobserver, tier: B}         # 48.4K/459 — CAUTION: occasionally posts present-day
+                                                     #   geopolitics (e.g. Greece/Turkey); engage only the
+                                                     #   pure-history posts, never the political ones
+    - {handle: timemap.app, tier: B}                # 4,680/1 "travel through history" reel app
+  blocked_accounts:
+    # Verified but wrong purpose — do not add to the watch list.
+    # acropolis.panorama.athens: an Airbnb rental listing account dressed as
+    #   history content (bio: "This view is one booking away", links to
+    #   airbnb.com). Its audience is Athens travel bookers, not history fans.
+    # georgiekirani: Greek travel/lifestyle influencer, not history content.
+    # raydalio: finance, wrong niche entirely.
+    []
   keywords:
     - roman empire
     - ancient rome
