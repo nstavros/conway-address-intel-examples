@@ -229,6 +229,16 @@ class Store:
         ).fetchone()
         return r is not None
 
+    def published_since(self, since_ts: int) -> list[sqlite3.Row]:
+        """Published rows joined with their draft text — feeds measure/weekly."""
+        return self.db.execute(
+            "SELECT p.draft_id, p.platform, p.published_at, p.external_url, "
+            "d.text, d.kind, d.funnel_class, d.material_id "
+            "FROM published p JOIN drafts d ON d.id=p.draft_id "
+            "WHERE p.published_at>=? ORDER BY p.published_at DESC",
+            (since_ts,),
+        ).fetchall()
+
     # -- metrics (feedback loop) ------------------------------------------------
     def record_metric(self, post_id: str, metric: str, value: float) -> None:
         self.db.execute(
@@ -236,6 +246,26 @@ class Store:
             (post_id, metric, value, int(time.time())),
         )
         self.db.commit()
+
+    def set_metric(self, post_id: str, metric: str, value: float) -> None:
+        """Replace-not-append: recomputed metrics (normalizations) must not
+        accumulate stale rows that would skew history averages."""
+        self.db.execute("DELETE FROM metrics WHERE post_id=? AND metric=?", (post_id, metric))
+        self.record_metric(post_id, metric, value)
+
+    def latest_metric(self, post_id: str, metric: str) -> float | None:
+        r = self.db.execute(
+            "SELECT value FROM metrics WHERE post_id=? AND metric=? "
+            "ORDER BY measured_at DESC LIMIT 1", (post_id, metric),
+        ).fetchone()
+        return r["value"] if r else None
+
+    def latest_metrics_by_post(self, metric: str) -> dict[str, float]:
+        rows = self.db.execute(
+            "SELECT post_id, value FROM metrics WHERE metric=? "
+            "ORDER BY measured_at ASC", (metric,),
+        ).fetchall()
+        return {r["post_id"]: r["value"] for r in rows}  # last write wins
 
     def author_history_score(self, author: str) -> float | None:
         """Mean normalized performance of our published posts that touched this author.

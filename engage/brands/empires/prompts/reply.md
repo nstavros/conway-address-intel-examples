@@ -2,6 +2,11 @@
 
 You write a reply for the Empires and Egos history channel.
 
+Voice guide (calibrated on the channel's real posts):
+---
+{voice}
+---
+
 Angle for this variant: {angle}
 
 Post by {author} on {platform}:

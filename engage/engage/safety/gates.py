@@ -4,10 +4,12 @@ layer blocks the draft. There is no override flag.
 
 Layers:
 1. regex   — deterministic per-brand rules from config (blocks.regex)
-2. provenance — numbers (and era-years) in the draft must literally appear in
+2. meta    — brand-neutral: text that is an assistant refusal or AI meta-text
+   rather than a post (a backend refusal must never reach the queue)
+3. provenance — numbers (and era-years) in the draft must literally appear in
    the linked source material (blocks.numeric_provenance /
    blocks.claims_require_source)
-3. llm     — a judge callable(prompt)->str must answer starting with PASS
+4. llm     — a judge callable(prompt)->str must answer starting with PASS
 """
 from __future__ import annotations
 
@@ -33,6 +35,30 @@ def _normalize_num(tok: str) -> str:
     return re.sub(r"[\s,]", "", tok.lower()).replace("×", "x").replace("million", "m").replace("billion", "b")
 
 
+# Assistant refusals / AI meta-text. A backend can decline a prompt; that
+# refusal is well-formed text with no figures and no blocked terms, so no
+# other layer catches it. Patterns are deliberately narrow to avoid blocking
+# legitimate first-person copy ("I can't stress this enough" passes).
+META_TEXT_RES = (
+    re.compile(r"^\s*I(?:'m| am)? (?:sorry|apolog)", re.IGNORECASE),
+    re.compile(
+        r"\bI (?:can(?:no|')t|cannot|won'?t|am unable to|'m unable to) "
+        r"(?:write|draft|generate|create|produce|help|assist|comply)\b",
+        re.IGNORECASE,
+    ),
+    re.compile(r"\bas an AI\b|\bAI (?:assistant|model)\b|\blanguage model\b", re.IGNORECASE),
+    re.compile(r"\bimpersonat(?:e|ing|ion)\b", re.IGNORECASE),
+    # commentary about the prompt machinery instead of a post ("I don't have
+    # any source material provided in this conversation" — observed live)
+    re.compile(
+        r"\bI (?:don'?t|do not) have (?:any )?(?:source material|voice guide|context|access)\b",
+        re.IGNORECASE,
+    ),
+    re.compile(r"\bin this (?:conversation|prompt|context)\b", re.IGNORECASE),
+    re.compile(r"\b(?:voice guide|system prompt)\b", re.IGNORECASE),
+)
+
+
 @dataclass
 class GateResult:
     passed: bool
@@ -45,6 +71,15 @@ def _regex_layer(text: str, ctx: BrandContext) -> list[str]:
         m = rx.search(text)
         if m:
             reasons.append(f"regex block {pattern!r} matched: {m.group(0)!r}")
+    return reasons
+
+
+def _meta_text_layer(text: str) -> list[str]:
+    reasons = []
+    for rx in META_TEXT_RES:
+        m = rx.search(text)
+        if m:
+            reasons.append(f"meta-text block (assistant refusal, not a post): {m.group(0)!r}")
     return reasons
 
 
@@ -93,6 +128,7 @@ def run_gates(text: str, ctx: BrandContext, source_texts: tuple[str, ...] = (),
               llm: Callable[[str], str] | None = None) -> GateResult:
     ctx.assert_no_foreign_canary(text)
     reasons = _regex_layer(text, ctx)
+    reasons += _meta_text_layer(text)
     reasons += _provenance_layer(text, ctx, source_texts)
     reasons += _llm_layer(text, ctx, source_texts, llm)
     return GateResult(passed=not reasons, reasons=reasons)

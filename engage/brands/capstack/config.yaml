@@ -4,10 +4,88 @@ priority: high
 platforms: [x, linkedin, instagram, tiktok]
 
 watch:
-  # Fill with the accounts you actually want engaged: CRE educators, sponsors,
-  # brokers, junior-developer communities. Tier A = high-value relationships.
-  accounts: []
-  blocked_accounts: []
+  # Instagram engagement targets, verified live 2026-08-19 (follower/following
+  # read off each profile; handles sourced from evidence, never guessed).
+  #
+  # Tier meaning here is ENGAGEMENT ROLE, not prestige — the scorer reads
+  # A=1.0, B=0.6, C=0.3 into author_value:
+  #   A = reciprocal peers. Low follower:following ratio means they follow and
+  #       reply to people. Engage AND follow — a follow-back is realistic.
+  #   B = comment venues. Right audience, but broadcasters (high ratio) who
+  #       will not follow back. Comment early to reach THEIR readers; do not
+  #       mass-follow them.
+  #   C = trade media / adjacent. Occasional, topical engagement only.
+  #
+  # Ratio is followers:following. Lower = more reciprocal.
+  accounts:
+    # --- A: development thesis + reciprocal (engage AND follow) -------------
+    - {handle: evanholladay, tier: A}          # 17.9K/8,002 (2.2:1) attainable-housing developer,
+                                               #   posts capital-stack explainers, runs a dev mentorship
+    - {handle: localrealestatedevelopers, tier: A}  # 1,080/1,064 (1.0:1) "Real projects | No gatekeeping"
+    - {handle: bethazor, tier: A}              # 10.3K/7,571 (1.4:1) retail leasing educator, posts daily
+    - {handle: marcusndaniels, tier: A}        # 23.1K/7,674 (3:1) VP NAI Michael + university professor
+    - {handle: developlexpod, tier: A}         # 12.1K development podcast (Lexington KY)
+    - {handle: eg_developer, tier: A}          # 335 Eugene Gershman — feasibility, JV/co-GP, site control.
+                                               #   Tiny, but the closest thesis match to Capstack anywhere
+    # --- A: hotel/hospitality investment side, reciprocal ------------------
+    - {handle: sujmehta, tier: A}              # 13K/1,595 (8:1) hotel investor, real deal content
+    - {handle: bllaboutiquelodging, tier: A}   # 3,259/2,621 (1.2:1) boutique hotel association
+    - {handle: boutiquehotelgirl, tier: A}     # 4,142/2,080 (2:1) BLLA COO
+    - {handle: bestevercre, tier: A}           # 12.2K/3,020 (4:1) CRE newsletter; LP-investor audience
+    # --- B: comment venues — right audience, broadcasters, no follow-back --
+    - {handle: stripmallguy, tier: B}          # 45.1K Don Tepman. Documented deal flow from IG DMs
+    - {handle: avivarealestate, tier: B}       # 43.8K verified, #1-2 CREi influencer, industrial broker
+    - {handle: commercial_in_nashville, tier: B}  # 26.4K/1,176 Tyler Cauble, verified, adaptive reuse
+    - {handle: blakejdailey, tier: B}          # 26.6K/460 (58:1) boutique hotel educator, DM CTAs
+    - {handle: kenmcelroyofficial, tier: B}    # 91K/6,817 multifamily, aspiring-investor audience
+    - {handle: fundedbyvic, tier: B}           # 12.9K verified, RE debt/capital markets — nearest to
+                                               #   Capstack's capital-stack subject matter
+    - {handle: jamesnelsonnyc, tier: B}        # 8,795 Avison Young head of US investment sales
+    - {handle: thencrea, tier: B}              # 8,215/452 CRE coach, bio: DM "CRE" to get started
+    - {handle: nealbawa, tier: B}              # 6,012/520 ground-up multifamily + student housing
+    - {handle: somerscapital, tier: B}         # 8,369/484 boutique hotel investment firm
+    # --- C: trade media / marketplaces — topical engagement only -----------
+    - {handle: crexi_cre, tier: C}             # 18.6K/7,425 marketplace; features individual brokers
+    - {handle: thecredaily, tier: C}           # 19.5K/63 CRE Daily newsletter
+    - {handle: bisnow, tier: C}                # 21.1K verified CRE trade press
+    - {handle: hotelbusinessmag, tier: C}      # 1,374/615 verified B2B hospitality
+    - {handle: bohonews, tier: C}              # 1,373/848 Boutique Hotel News
+    - {handle: lodgingmagazine, tier: C}       # 1,910/477 AHLA publication
+    - {handle: hunterconference, tier: C}      # 1,438/159 Hunter Hotel Investment Conference
+    - {handle: travelingglenn, tier: C}        # 1,831/92 Glenn Haussman, "No Vacancy" podcast
+  # Impersonation / wrong-person traps. These handles LOOK right and are cited
+  # by listicles, but resolve to someone else entirely. Blocklisting them means
+  # the scorer hard-zeroes them if they ever appear in an ingest.
+  blocked_accounts:
+    - thecauble           # does not resolve; listicles imply it is Tyler Cauble
+    - coachcaubs          # a DIFFERENT Tyler Cauble — lacrosse coach, 1,436
+    - melansonrealty      # Mark Melanson, Calgary realtor — NOT developer Shane Melanson
+    - hunterlthompson     # a car sales rep (private, 433) — NOT the capital-raising educator
+    - developlex          # private, 0 followers, unrelated. Correct: developlexpod
+    - multifamilyu        # 2 followers, unrelated person
+    - tylercauble         # 17 followers, not the CRE figure. Correct: commercial_in_nashville
+    - theboutiquehotelier # traveler audience — NOT the trade mag (boutiquehoteliermag)
+    - tiffany.ryland      # 1,959 secondary account. Correct: tiffannryland
+    - blake_hagzcre       # cited in old show notes, does not resolve. Correct: blake_haggett
+  # Also deliberately NOT in the watch list (verified, but excluded on purpose):
+  #  Dormant/dead: adventuresincre (53/2), cre.daily (0/0 private),
+  #    hotelinvestoracademy (last post Mar 2026), hotelmgmtmag_ (0 posts),
+  #    hospitality_net (0 posts), commercial_real_estate_show (last post 2020),
+  #    thecaublegroup (dormant 2022), kenvanliew (stale Apr 2026)
+  #  Private: moseskagan (446), jasonjosephlee (30.1K), azcommercialrealestate (16K)
+  #  Over the 150K ceiling: sweatystartup (210K), gabe_einhorn (249K),
+  #    molzerdevelopment (243K), rich_somers (502K), investorgirlbritt (320K),
+  #    arthurthedeveloper (~222K)
+  #  Wrong audience — interior design, not development capital: hospitalitydesign,
+  #    avroko, meyerdavis, studiomunge, boutiquedesignmag, watgdesigns,
+  #    stonehilltaylor, wimberlyinteriors
+  #  Wrong audience — travel/review: thehoteljournalmag, pacificahotels
+  #  Wrong audience — corporate project-marketing feeds, not educators:
+  #    mack_development, peak_developers, redrealestatedevelopers, rodrockdevelopment
+  #  Off-thesis now: emilydempsey (CRE licence, but feed pivoted to crypto/lifestyle)
+  #  Handles NOT verified — do not add without checking: justin.goodin (count
+  #    unverified; a BiggerPockets warning thread about him exists, diligence first),
+  #    jeromemaldonado1, hunterlthompson_, timbratz
   keywords:
     - real estate development
     - co-gp
@@ -50,7 +128,7 @@ voice:
     - "the seat you can actually take"
     - "Comment GAP"
   reply_angles:
-    - "answer the actual question with a specific mechanism and a real number from experience — teach the thing"
+    - "answer the actual question with a specific mechanism — teach the thing; cite a real number only if the provided material contains one"
     - "reframe the question to the decision that actually matters, then answer that"
 
 scoring:

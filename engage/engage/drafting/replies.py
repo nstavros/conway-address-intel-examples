@@ -34,6 +34,7 @@ def draft_replies(post: Post, ctx: BrandContext, backend: Callable[[str], str]) 
             "author": post.author,
             "platform": post.platform,
             "post_text": post.text,
+            "voice": ctx.prompts.get("voice", ""),
         }, backend)
         if not _adds_something(text, post.text):
             continue  # generic agreement / rephrase — not worth a human's review time
