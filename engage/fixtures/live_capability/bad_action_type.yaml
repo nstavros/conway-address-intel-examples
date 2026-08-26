@@ -1,0 +1,10 @@
+verified_at: "2026-08-21"
+bindings:
+  - engage_slug: capstack
+    canonical_brand: "Capstacknick"
+    platform: instagram
+    bot_id: "bot-x"
+    bot_username: "@capstacknick"
+    automation_id: "auto-x"
+    status: "Active"
+    action_type: comment_reply

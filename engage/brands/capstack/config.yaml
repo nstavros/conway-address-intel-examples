@@ -1,7 +1,12 @@
 # Capstack Nick — teaching account. Goal: followers -> email list -> product sales.
 brand: capstack
 priority: high
-platforms: [x, linkedin, instagram, tiktok]
+platforms: [x, instagram, tiktok]
+# LinkedIn removed 2026-08-21 (DEC-SM-003): Capstacknick has no LinkedIn
+# posting target. Approved posts from Stowecap's primary LinkedIn may be used
+# as source material via `engage material`, but Capstacknick must draft its
+# own version in its own voice and clear its own gates — never post directly
+# to the Stowecap LinkedIn account. See harness/social/DECISIONS.md.
 
 watch:
   # Instagram engagement targets, verified live 2026-08-19 (follower/following
@@ -121,6 +126,49 @@ watch:
     - capital stack
     - fees
 
+# Pillar NAMES from ~/RE Dev Content Engine/content-calendar.md (2026-08-08),
+# whose own rule is "keep roughly even over time" — originals.py picks the
+# least-used pillar next, mirroring that calendar's balance tracker.
+#
+# CORRECTED 2026-08-21 (DEC-SM-012): the fifth pillar was MISSING. Source of
+# truth is ~/RE Dev Content Engine/STRATEGY-90DAY.md, Updated 2026-08-20,
+# which adds "THE SIGNAL" — the Aug 8 calendar predates it and never mentions
+# it. Signal content was already produced 2026-08-20 08:33-08:34
+# (posts/SIGNAL_01_CAPTION.txt, posts/specs/signal01.json + signal01_reel.json,
+# rendered posts/reels/signal01_reel.mp4), so the config was 12 days behind
+# work already on disk.
+content_pillars:
+  - id: the-way-in
+    name: "The Way In"
+  - id: the-reality
+    name: "The Reality"
+  - id: the-mechanics
+    name: "The Mechanics"
+    # STRATEGY-90DAY §Phase 2: "Every Mechanics post carries a comment-keyword
+    # CTA (they drive the magnets)."
+  - id: the-traps
+    name: "The Traps"
+  - id: the-signal
+    name: "The Signal"
+    # STRATEGY-90DAY: "Script the fifth pillar (2 posts in batch-03): THE
+    # SIGNAL — how content + AI builds authority that attracts deals; anchor =
+    # the $800M inbound story." Noted there as "the only pillar where the
+    # account itself is the proof."
+
+# From STRATEGY-90DAY.md §5 Targets (Updated 2026-08-20). Its own success
+# definition at day 90: "the machine is proven: content -> list -> paid, at
+# any revenue level."
+kpi:
+  business_objective: lead_generation_and_sales
+  key_metrics: [qualified_leads, booked_calls, pipeline_value, revenue_attributed, profile_visits, link_clicks]
+  # STRATEGY-90DAY §Phase 2 names these as the 48h watch metrics; email
+  # signups per post is called out there as "the only number that matters".
+  watch_metrics: [completion_rate, saves, profile_visits, qualified_leads]
+  targets:
+    day_30: {ig_followers: "3.5K", email_list: 100, tripwire_sales: 0}
+    day_60: {ig_followers: "5K", email_list: 400, tripwire_sales: "15-30"}
+    day_90: {ig_followers: "7-10K", email_list: "800-1200", tripwire_sales: "40-80"}
+
 voice:
   prompt_dir: prompts
   signature_phrases:
@@ -136,7 +184,7 @@ scoring:
   question_multiplier: 1.5
   cooldown_days: 7
   momentum_baseline_per_hour: 25
-  half_life_hours: {x: 6, linkedin: 48, instagram: 24, tiktok: 8}
+  half_life_hours: {x: 6, instagram: 24, tiktok: 8}
 
 blocks:
   llm_gate: required
@@ -184,12 +232,10 @@ funnel:
 
 cadence:
   x: "5-7/week"
-  linkedin: "3/week"
   instagram: "3-4/week"
   tiktok: "2-3/week repurposed"
 
 rate_limits:
   x: {posts_per_day: 3, replies_per_day: 15}
-  linkedin: {posts_per_day: 1, replies_per_day: 10}
   instagram: {posts_per_day: 2, replies_per_day: 10}
   tiktok: {posts_per_day: 1, replies_per_day: 5}
