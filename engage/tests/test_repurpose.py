@@ -60,9 +60,9 @@ class TestFanOut(unittest.TestCase):
         drafts2, skipped2 = repurpose(self.store, self.ctx, self.material, stub_backend, ["x"])
         self.assertEqual(drafts2, [])
         self.assertEqual(skipped2, ["x"])
-        # other platforms remain eligible
-        eligible, _ = eligible_platforms(self.store, self.ctx, MATERIAL["id"], ["linkedin"])
-        self.assertEqual(eligible, ["linkedin"])
+        # other platforms remain eligible (capstack has no linkedin target — see DEC-SM-003)
+        eligible, _ = eligible_platforms(self.store, self.ctx, MATERIAL["id"], ["instagram"])
+        self.assertEqual(eligible, ["instagram"])
 
     def test_blocked_draft_does_not_burn_the_reuse_slot(self):
         from .helpers import block_llm

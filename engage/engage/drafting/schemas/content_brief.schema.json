@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://engage.local/schemas/content_brief.schema.json",
+  "title": "Content Brief",
+  "description": "Harvested and adapted from ~/content-os/shared/schemas/content-brief.schema.json (Content OS retired 2026-08-21, see ~/.claude/harness/social/DECISIONS.md DEC-SM-002). The planning artifact between a brand's source material and a platform-native draft. 'lifecycle_status' replaces the original 'status' enum with the fuller Phase 1 vocabulary (engage/core/models.py LIFECYCLE_STATES). 'lead_magnet' is optional here, not required — it is a Capstacknick-specific funnel concept and this schema is brand-agnostic engine infrastructure (DESIGN.md: 'the engine contains zero brand language'). This schema governs the BRIEF only; the drafted TEXT is still independently governed by engage/safety/gates.py, unchanged.",
+  "type": "object",
+  "required": [
+    "brand", "audience", "objective", "core_insight", "platform", "format",
+    "hook", "cta", "brand_voice", "lifecycle_status"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Content record id. Matches the owning ContentRecord.id."
+    },
+    "brand": {
+      "type": "string",
+      "description": "ENGAGE slug (brands/<slug>/). Never inferred — always explicit."
+    },
+    "pillar": {
+      "type": "string",
+      "description": "Content pillar/topic cluster from the brand's config.yaml content_pillars, if any."
+    },
+    "audience": { "type": "string", "minLength": 1 },
+    "objective": { "type": "string", "minLength": 1 },
+    "core_insight": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The contrarian point of view. If it is not arguable, it is not an insight."
+    },
+    "platform": { "type": "string", "minLength": 1 },
+    "format": {
+      "type": "string",
+      "enum": ["reel", "carousel", "story-sequence", "lead-magnet", "short"],
+      "description": "'reel' covers any short vertical video (IG Reel / TikTok / YouTube Short). 'short' declares a title+description+media piece specifically, checked against a different constraint key set than reel's single caption."
+    },
+    "hook": { "type": "string", "minLength": 1 },
+    "hooks_considered": { "type": "array", "items": { "type": "string" } },
+    "cta": { "type": "string", "minLength": 1 },
+    "lead_magnet": {
+      "type": "string",
+      "description": "What gets handed over, or 'none'. Optional — see top-level description."
+    },
+    "brand_voice": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Pointer to the governing voice prompt, e.g. brands/<slug>/prompts/voice.md."
+    },
+    "success_metric": { "type": "string" },
+    "outline": { "type": "array", "items": { "type": "string" } },
+    "caption": { "type": "string" },
+    "engagement_question": { "type": "string" },
+    "sources": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Material IDs already in this brand's Store (engage material). Claims may trace ONLY to these — enforced by safety/gates.py numeric_provenance / claims_require_source, not by this schema."
+    },
+    "claims": { "type": "array", "items": { "type": "string" } },
+    "lifecycle_status": {
+      "type": "string",
+      "enum": [
+        "draft", "review_required", "approved", "scheduled", "publishing",
+        "published", "verified", "paused", "failed", "rejected", "cancelled"
+      ]
+    },
+    "approved_by": { "type": "string" },
+    "approved_at": { "type": "string" }
+  }
+}

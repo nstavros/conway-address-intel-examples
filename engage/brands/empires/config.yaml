@@ -70,6 +70,65 @@ watch:
     - "#historytok"
     - "#ancientrome"
 
+# CORRECTED 2026-08-21 (DEC-SM-012). The four topic labels previously here
+# (Rome & Byzantium / Empires Beyond Rome / Commanders & Turning Points /
+# Why Empires Fall) were grouped from watch.keywords and appear NOWHERE in
+# the approved plan — they were the wrong axis entirely, not just unverified
+# labels. Source of truth: the "Empires & Egos — Content Roadmap" artifact,
+# Updated 2026-08-20 (see harness/social/registry/planning-sources.yaml).
+#
+# That roadmap organizes on two axes:
+#   1. FORMAT — what is actually running now. These are the real pillars.
+#   2. LANES A-E — long-form topic banks, ALL parked behind the ~500-subscriber
+#      gate. Recorded below as parked_topic_banks, deliberately NOT as pillars,
+#      because nothing in them is in play.
+# Numbers in comments are the roadmap's own measured data (read 2026-08-18
+# through 2026-08-20 from YouTube/TikTok/Instagram), not estimates.
+content_pillars:
+  - id: odyssey-film-hook-analysis
+    name: "Odyssey (film hook + analysis)"
+    # IG breakout: 2,417 plays vs ~140 Evolution median (~15x). TikTok 431 —
+    # NOT yet confirmed there. Carries Content ID exposure, so not on YouTube.
+  - id: evolution-objects-places
+    name: "Evolution of X (objects/places)"
+    # The safe YouTube default: 1,820 avg YT. Flat on feeds (142-163 IG).
+  - id: evolution-human-figures
+    name: "Evolution of X (human figures)"
+    # 1,449 avg YT, but 2,236 best TikTok / 2,415 best IG — 18x spread inside
+    # the category. Roadmap's own conclusion: hook decides, not category.
+  - id: pov-character-reel
+    name: "POV character reel"
+    status: retired_pending_bounded_retest
+    # Retired 16 Aug (35 views, worst on the account). One bounded retest
+    # proposed (Constantinople 1453, reusing EP5 assets at $0) before the
+    # door is treated as closed.
+
+# Lanes A-E from the same roadmap — a topic BANK for whenever long-form
+# reopens, not an active rotation. Every lane header in the roadmap reads
+# "(parked — long-form gate)". Demand tiers there are researched comparables
+# from 2026-08-02/03, explicitly "not live numbers".
+parked_topic_banks:
+  gate: "~500 YouTube subscribers (long-form formally parked until then)"
+  lanes:
+    - {id: lane-a, name: "Lane A — Classical & Ancient"}
+    - {id: lane-b, name: "Lane B — Medieval & Conquest"}
+    - {id: lane-c, name: "Lane C — Finance & Business Collapse"}
+    - {id: lane-d, name: "Lane D — Modern Empires"}
+    - {id: lane-e, name: "Lane E — Systemic & Framework"}
+
+# From the roadmap's "90-day goal" section. Baseline 2026-08-02: ~6,100 views,
+# 22 subs, 32 watch hours. Actual at Day 18 of 90: 73 YT subs, 15 TikTok /
+# 20 IG followers, 304 long-form views (parked).
+kpi:
+  business_objective: raw_growth
+  key_metrics: [views, watch_time, completion_rate]
+  targets:
+    base: {cumulative_views: "150K-400K", new_subscribers: "600-2000"}
+    stretch: {cumulative_views: "1M-3M", new_subscribers: "8000-25000"}
+  decision_gates:
+    - "~500 subscribers unlocks long-form (and Lanes A-E)"
+    - "Odyssey 03's 48h read decides whether Odyssey becomes the default IG/TikTok format"
+
 voice:
   prompt_dir: prompts
   signature_phrases:
@@ -103,9 +162,42 @@ blocks:
     - engagement-bait unrelated to history
 
 cadence:
-  instagram: "1 reel/day"
-  tiktok: "1/day cross-post"
-  youtube: "shorts 2-3/week (Evolution format won the A/B); long-form ~1/month"
+  # Structured form: count + period. The period is REQUIRED — a bare number is
+  # ambiguous, and used to be silently read as per-week (see report/weekly.py).
+  instagram:
+    count: 1
+    period: day
+    source_text: "1 reel/day"
+
+  tiktok:
+    count: 1
+    period: day
+    note: "cross-post"
+    source_text: "1/day cross-post"
+
+  youtube:
+    # LAUNCH/GROWTH MODE: Shorts daily until ~500 subscribers.
+    # Owner rule, 2026-08-24. Baseline was 73 subs at Day 18 of 90 (see the
+    # kpi comment above), so this mode is active now.
+    # Switching to steady state is a DELIBERATE edit — set `mode: steady`.
+    # ENGAGE does not track subscriber count reliably and must not flip this
+    # on its own; auto-switching on a metric it cannot verify would be a guess.
+    mode: launch_growth
+    count: 1
+    period: day
+    until: "~500 YouTube subscribers"
+    source_text: "shorts daily while in launch/growth mode until 500 subs"
+    steady_state:
+      count: 2
+      period: week
+      note: "shorts 2-3/week — the Evolution format won the A/B"
+    long_form:
+      count: 1
+      period: month
+      note: >
+        ~1/month, and gated behind the kpi decision gate
+        "~500 subscribers unlocks long-form (and Lanes A-E)". Not counted
+        toward the weekly target — a monthly item is not a weekly commitment.
 
 rate_limits:
   instagram: {posts_per_day: 2, replies_per_day: 10}

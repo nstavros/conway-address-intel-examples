@@ -17,10 +17,47 @@ from ..funnel.classifier import classify
 WEEK = 7 * 86400
 
 
+PER_WEEK = {"day": 7.0, "week": 1.0, "month": 1.0 / 4.345}
+
+
 def _cadence_target(value) -> int:
-    """'5-7/week' -> 5, '3/week' -> 3 (the floor is the commitment)."""
-    m = re.search(r"\d+", str(value))
-    return int(m.group(0)) if m else 0
+    """Posts per WEEK. The floor of a range is the commitment.
+
+    Accepts two forms:
+
+      structured  {count: 1, period: day}   -> 7
+                  {count: 2, period: week}  -> 2
+                  with `mode`/`steady_state`, the ACTIVE mode's rate wins
+      legacy str  "1 reel/day"              -> 7
+                  "5-7/week"                -> 5
+                  "opportunistic"           -> 0  (no numeric commitment)
+
+    UNITS ARE NOT OPTIONAL. The previous implementation read the first
+    integer and assumed per-week, so "1 reel/day" scored 1 instead of 7 — a
+    brand posting daily on three platforms had its whole weekly target read
+    as 4 against a real ~16, and the cadence-gap rule below (which fires at
+    half the target) effectively never triggered. A value carrying a number
+    but no recognised period now returns 0 rather than guessing — a missing
+    target is visible in the report, a wrong one is not.
+
+    A monthly rate floors to 0 deliberately: ~1/month is not a weekly
+    commitment and must not inflate a weekly gap.
+    """
+    if isinstance(value, dict):
+        active = value.get("steady_state") if value.get("mode") == "steady" else value
+        count, period = active.get("count"), active.get("period")
+        if not isinstance(count, int) or period not in PER_WEEK:
+            return 0
+        return int(count * PER_WEEK[period])
+
+    text = str(value).lower()
+    m = re.search(r"\d+", text)
+    if not m:
+        return 0
+    period = next((p for p in PER_WEEK if p in text), None)
+    if period is None:
+        return 0
+    return int(int(m.group(0)) * PER_WEEK[period])
 
 
 def _recommend(ctx: BrandContext, store: Store, published, pending, blocked,

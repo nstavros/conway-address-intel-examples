@@ -9,7 +9,8 @@ class BrandConfigError(Exception):
 
 ALLOWED_TOP = {
     "brand", "priority", "platforms", "watch", "voice", "scoring", "blocks",
-    "funnel", "cadence", "rate_limits", "listening",
+    "funnel", "cadence", "rate_limits", "listening", "content_pillars", "kpi",
+    "parked_topic_banks",
 }
 REQUIRED_TOP = {"brand", "platforms", "scoring", "blocks", "voice"}
 SCORE_COMPONENTS = {"relevance", "author_value", "recency", "momentum", "history"}
@@ -55,6 +56,10 @@ def validate(raw: dict, brand_name: str) -> dict:
     voice = raw.get("voice") or {}
     if not isinstance(voice.get("signature_phrases", []), list):
         problems.append("voice.signature_phrases must be a list")
+
+    pillars = raw.get("content_pillars")
+    if pillars is not None and (not isinstance(pillars, list) or not pillars):
+        problems.append("content_pillars must be a non-empty list when present")
 
     funnel = raw.get("funnel")
     if funnel is not None:
