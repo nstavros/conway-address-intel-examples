@@ -1,0 +1,53 @@
+verified_at: "2026-08-21"
+verification_method: "test fixture"
+bindings:
+  - engage_slug: capstack
+    canonical_brand: "Capstacknick"
+    platform: instagram
+    bot_id: "bot-capstack-1"
+    bot_username: "@capstacknick"
+    registry_account_handle: "capstacknick"
+    automation_id: "auto-capstack-1"
+    automation_name: "CAPSTACK comment-to-DM (diagnostic funnel)"
+    status: "Active"
+    action_type: comment_triggered_dm
+    trigger_keyword: "CAPSTACK"
+    action_summary: "Sends a 2-message DM sequence, never a public reply."
+    total_clients: 0
+    total_conversions: 0
+    last_run_at: null
+    execution_note: "never fired"
+
+  - engage_slug: empires
+    canonical_brand: "Empires and Egos"
+    platform: instagram
+    bot_id: "bot-empires-1"
+    bot_username: "@empires.and.egos"
+    registry_account_handle: "empires.and.egos"
+    automation_id: "auto-empires-1"
+    automation_name: "TOGA to Comment"
+    status: "Paused"
+    action_type: comment_triggered_dm
+    trigger_keyword: "TOGA"
+    action_summary: "Sends a DM sequence, never a public reply."
+    total_clients: 0
+    total_conversions: 0
+    last_run_at: null
+    execution_note: "paused, never fired"
+
+  - engage_slug: capstack
+    canonical_brand: "Capstacknick"
+    platform: instagram
+    bot_id: "bot-capstack-imposter"
+    bot_username: "@not_capstacknick_at_all"
+    registry_account_handle: "capstacknick"
+    automation_id: "auto-capstack-imposter"
+    automation_name: "Suspicious duplicate binding"
+    status: "Active"
+    action_type: comment_triggered_dm
+    trigger_keyword: "X"
+    action_summary: "A binding whose bot_username does not match the registry handle."
+    total_clients: 0
+    total_conversions: 0
+    last_run_at: null
+    execution_note: "identity should fail verification"

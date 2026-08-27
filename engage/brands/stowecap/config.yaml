@@ -1,0 +1,72 @@
+# Stowecap — hospitality / NYC real estate development. DEPRIORITIZED until a
+# channel is connected; the hard blocks below are live regardless.
+# Goal: credibility and relationships with LPs, lenders, brokers, GMs,
+# operators, trade press. Quality of who engages, not how many.
+brand: stowecap
+priority: low
+platforms: [linkedin, instagram, x]
+
+watch:
+  accounts: []   # LPs, lenders, brokers, trade press — fill when activated
+  blocked_accounts: []
+  keywords:
+    - hotel development
+    - nyc real estate
+    - hospitality
+    - adaptive reuse
+    - hotel operations
+    - revpar
+    - boutique hotel
+    - construction
+  hashtags: []
+
+voice:
+  prompt_dir: prompts
+  signature_phrases: []
+  reply_angles:
+    - "add an operational or market data point from direct experience"
+    - "ask the sharp practitioner question that shows we operate, not just invest"
+
+scoring:
+  # author-heavy: the goal is WHO engages
+  weights: {relevance: 0.30, author_value: 0.40, recency: 0.10, momentum: 0.10, history: 0.10}
+  question_multiplier: 1.0
+  cooldown_days: 14
+  momentum_baseline_per_hour: 10
+  half_life_hours: {linkedin: 72, instagram: 24, x: 8}
+
+blocks:
+  llm_gate: required
+  numeric_provenance: true
+  claims_require_source: true
+  regex:
+    # no returns figures or projections
+    - '\b\d+(\.\d+)?\s?%\s?(IRR|return|yield|cash[- ]on[- ]cash)\b'
+    - '\bIRR\b'
+    - '\b\d+(\.\d+)?\s?x\s?(multiple|equity|MOIC)\b'
+    - '\bMOIC\b'
+    - '\bproject(ed|ion|ing)\b'
+    - '\bpro[- ]?forma\b'
+    - '\btarget(ed|ing)?\s+returns?\b'
+    # no fundraising language
+    - '\b(raising|raise|fundrais\w+)\b'
+    - '\b506\(?[bc]\)?\b'
+    - '\b(allocation|commitments?|subscri\w+)\s+(open|available|remaining)\b'
+    - '\binvest with us\b'
+    - '\bLP\s+(opportunit|interest)\w*\b'
+  topics:
+    - anything about returns, projections, or fund performance
+    - fundraising or solicitation in any form
+    - naming LPs or lenders
+    - specifics of any unclosed deal
+    - thought-leader filler with no number or fact
+
+cadence:
+  linkedin: "2/week"
+  instagram: "1-2/week (property/design)"
+  x: "opportunistic"
+
+rate_limits:
+  linkedin: {posts_per_day: 1, replies_per_day: 5}
+  instagram: {posts_per_day: 1, replies_per_day: 5}
+  x: {posts_per_day: 2, replies_per_day: 5}

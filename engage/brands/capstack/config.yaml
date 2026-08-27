@@ -1,0 +1,241 @@
+# Capstack Nick — teaching account. Goal: followers -> email list -> product sales.
+brand: capstack
+priority: high
+platforms: [x, instagram, tiktok]
+# LinkedIn removed 2026-08-21 (DEC-SM-003): Capstacknick has no LinkedIn
+# posting target. Approved posts from Stowecap's primary LinkedIn may be used
+# as source material via `engage material`, but Capstacknick must draft its
+# own version in its own voice and clear its own gates — never post directly
+# to the Stowecap LinkedIn account. See harness/social/DECISIONS.md.
+
+watch:
+  # Instagram engagement targets, verified live 2026-08-19 (follower/following
+  # read off each profile; handles sourced from evidence, never guessed).
+  #
+  # Tier meaning here is ENGAGEMENT ROLE, not prestige — the scorer reads
+  # A=1.0, B=0.6, C=0.3 into author_value:
+  #   A = reciprocal peers. Low follower:following ratio means they follow and
+  #       reply to people. Engage AND follow — a follow-back is realistic.
+  #   B = comment venues. Right audience, but broadcasters (high ratio) who
+  #       will not follow back. Comment early to reach THEIR readers; do not
+  #       mass-follow them.
+  #   C = trade media / adjacent. Occasional, topical engagement only.
+  #
+  # Ratio is followers:following. Lower = more reciprocal.
+  accounts:
+    # --- A: development thesis + reciprocal (engage AND follow) -------------
+    - {handle: evanholladay, tier: A}          # 17.9K/8,002 (2.2:1) attainable-housing developer,
+                                               #   posts capital-stack explainers, runs a dev mentorship
+    - {handle: localrealestatedevelopers, tier: A}  # 1,080/1,064 (1.0:1) "Real projects | No gatekeeping"
+    - {handle: bethazor, tier: A}              # 10.3K/7,571 (1.4:1) retail leasing educator, posts daily
+    - {handle: marcusndaniels, tier: A}        # 23.1K/7,674 (3:1) VP NAI Michael + university professor
+    - {handle: developlexpod, tier: A}         # 12.1K development podcast (Lexington KY)
+    - {handle: eg_developer, tier: A}          # 335 Eugene Gershman — feasibility, JV/co-GP, site control.
+                                               #   Tiny, but the closest thesis match to Capstack anywhere
+    # --- A: hotel/hospitality investment side, reciprocal ------------------
+    - {handle: sujmehta, tier: A}              # 13K/1,595 (8:1) hotel investor, real deal content
+    - {handle: bllaboutiquelodging, tier: A}   # 3,259/2,621 (1.2:1) boutique hotel association
+    - {handle: boutiquehotelgirl, tier: A}     # 4,142/2,080 (2:1) BLLA COO
+    - {handle: bestevercre, tier: A}           # 12.2K/3,020 (4:1) CRE newsletter; LP-investor audience
+    # --- B: comment venues — right audience, broadcasters, no follow-back --
+    - {handle: stripmallguy, tier: B}          # 45.1K Don Tepman. Documented deal flow from IG DMs
+    - {handle: avivarealestate, tier: B}       # 43.8K verified, #1-2 CREi influencer, industrial broker
+    - {handle: commercial_in_nashville, tier: B}  # 26.4K/1,176 Tyler Cauble, verified, adaptive reuse
+    - {handle: blakejdailey, tier: B}          # 26.6K/460 (58:1) boutique hotel educator, DM CTAs
+    - {handle: kenmcelroyofficial, tier: B}    # 91K/6,817 multifamily, aspiring-investor audience
+    - {handle: fundedbyvic, tier: B}           # 12.9K verified, RE debt/capital markets — nearest to
+                                               #   Capstack's capital-stack subject matter
+    - {handle: jamesnelsonnyc, tier: B}        # 8,795 Avison Young head of US investment sales
+    - {handle: thencrea, tier: B}              # 8,215/452 CRE coach, bio: DM "CRE" to get started
+    - {handle: nealbawa, tier: B}              # 6,012/520 ground-up multifamily + student housing
+    - {handle: somerscapital, tier: B}         # 8,369/484 boutique hotel investment firm
+    # --- C: trade media / marketplaces — topical engagement only -----------
+    - {handle: crexi_cre, tier: C}             # 18.6K/7,425 marketplace; features individual brokers
+    - {handle: thecredaily, tier: C}           # 19.5K/63 CRE Daily newsletter
+    - {handle: bisnow, tier: C}                # 21.1K verified CRE trade press
+    - {handle: hotelbusinessmag, tier: C}      # 1,374/615 verified B2B hospitality
+    - {handle: bohonews, tier: C}              # 1,373/848 Boutique Hotel News
+    - {handle: lodgingmagazine, tier: C}       # 1,910/477 AHLA publication
+    - {handle: hunterconference, tier: C}      # 1,438/159 Hunter Hotel Investment Conference
+    - {handle: travelingglenn, tier: C}        # 1,831/92 Glenn Haussman, "No Vacancy" podcast
+  # Impersonation / wrong-person traps. These handles LOOK right and are cited
+  # by listicles, but resolve to someone else entirely. Blocklisting them means
+  # the scorer hard-zeroes them if they ever appear in an ingest.
+  blocked_accounts:
+    - thecauble           # does not resolve; listicles imply it is Tyler Cauble
+    - coachcaubs          # a DIFFERENT Tyler Cauble — lacrosse coach, 1,436
+    - melansonrealty      # Mark Melanson, Calgary realtor — NOT developer Shane Melanson
+    - hunterlthompson     # a car sales rep (private, 433) — NOT the capital-raising educator
+    - developlex          # private, 0 followers, unrelated. Correct: developlexpod
+    - multifamilyu        # 2 followers, unrelated person
+    - tylercauble         # 17 followers, not the CRE figure. Correct: commercial_in_nashville
+    - theboutiquehotelier # traveler audience — NOT the trade mag (boutiquehoteliermag)
+    - tiffany.ryland      # 1,959 secondary account. Correct: tiffannryland
+    - blake_hagzcre       # cited in old show notes, does not resolve. Correct: blake_haggett
+  # Also deliberately NOT in the watch list (verified, but excluded on purpose):
+  #  Dormant/dead: adventuresincre (53/2), cre.daily (0/0 private),
+  #    hotelinvestoracademy (last post Mar 2026), hotelmgmtmag_ (0 posts),
+  #    hospitality_net (0 posts), commercial_real_estate_show (last post 2020),
+  #    thecaublegroup (dormant 2022), kenvanliew (stale Apr 2026)
+  #  Private: moseskagan (446), jasonjosephlee (30.1K), azcommercialrealestate (16K)
+  #  Over the 150K ceiling: sweatystartup (210K), gabe_einhorn (249K),
+  #    molzerdevelopment (243K), rich_somers (502K), investorgirlbritt (320K),
+  #    arthurthedeveloper (~222K)
+  #  Wrong audience — interior design, not development capital: hospitalitydesign,
+  #    avroko, meyerdavis, studiomunge, boutiquedesignmag, watgdesigns,
+  #    stonehilltaylor, wimberlyinteriors
+  #  Wrong audience — travel/review: thehoteljournalmag, pacificahotels
+  #  Wrong audience — corporate project-marketing feeds, not educators:
+  #    mack_development, peak_developers, redrealestatedevelopers, rodrockdevelopment
+  #  Off-thesis now: emilydempsey (CRE licence, but feed pivoted to crypto/lifestyle)
+  #  Handles NOT verified — do not add without checking: justin.goodin (count
+  #    unverified; a BiggerPockets warning thread about him exists, diligence first),
+  #    jeromemaldonado1, hunterlthompson_, timbratz
+  keywords:
+    - real estate development
+    - co-gp
+    - promote
+    - lp equity
+    - construction loan
+    - underwriting
+    - pro forma
+    - cap rate
+    - ground-up
+    - adaptive reuse
+    - hotel development
+    - multifamily
+    - capital stack
+    - first deal
+    - sponsor
+  hashtags:
+    - "#realestatedevelopment"
+    - "#cre"
+    - "#realestateinvesting"
+  # questions matching these topics get the question multiplier — answered
+  # questions are the top of the funnel
+  teachable_topics:
+    - how to break into development
+    - co-gp
+    - promote
+    - deal structure
+    - raise equity
+    - underwrite
+    - contingency
+    - construction loan
+    - first deal
+    - capital stack
+    - fees
+
+# Pillar NAMES from ~/RE Dev Content Engine/content-calendar.md (2026-08-08),
+# whose own rule is "keep roughly even over time" — originals.py picks the
+# least-used pillar next, mirroring that calendar's balance tracker.
+#
+# CORRECTED 2026-08-21 (DEC-SM-012): the fifth pillar was MISSING. Source of
+# truth is ~/RE Dev Content Engine/STRATEGY-90DAY.md, Updated 2026-08-20,
+# which adds "THE SIGNAL" — the Aug 8 calendar predates it and never mentions
+# it. Signal content was already produced 2026-08-20 08:33-08:34
+# (posts/SIGNAL_01_CAPTION.txt, posts/specs/signal01.json + signal01_reel.json,
+# rendered posts/reels/signal01_reel.mp4), so the config was 12 days behind
+# work already on disk.
+content_pillars:
+  - id: the-way-in
+    name: "The Way In"
+  - id: the-reality
+    name: "The Reality"
+  - id: the-mechanics
+    name: "The Mechanics"
+    # STRATEGY-90DAY §Phase 2: "Every Mechanics post carries a comment-keyword
+    # CTA (they drive the magnets)."
+  - id: the-traps
+    name: "The Traps"
+  - id: the-signal
+    name: "The Signal"
+    # STRATEGY-90DAY: "Script the fifth pillar (2 posts in batch-03): THE
+    # SIGNAL — how content + AI builds authority that attracts deals; anchor =
+    # the $800M inbound story." Noted there as "the only pillar where the
+    # account itself is the proof."
+
+# From STRATEGY-90DAY.md §5 Targets (Updated 2026-08-20). Its own success
+# definition at day 90: "the machine is proven: content -> list -> paid, at
+# any revenue level."
+kpi:
+  business_objective: lead_generation_and_sales
+  key_metrics: [qualified_leads, booked_calls, pipeline_value, revenue_attributed, profile_visits, link_clicks]
+  # STRATEGY-90DAY §Phase 2 names these as the 48h watch metrics; email
+  # signups per post is called out there as "the only number that matters".
+  watch_metrics: [completion_rate, saves, profile_visits, qualified_leads]
+  targets:
+    day_30: {ig_followers: "3.5K", email_list: 100, tripwire_sales: 0}
+    day_60: {ig_followers: "5K", email_list: 400, tripwire_sales: "15-30"}
+    day_90: {ig_followers: "7-10K", email_list: "800-1200", tripwire_sales: "40-80"}
+
+voice:
+  prompt_dir: prompts
+  signature_phrases:
+    - "Match yourself to the money"
+    - "the seat you can actually take"
+    - "Comment GAP"
+  reply_angles:
+    - "answer the actual question with a specific mechanism — teach the thing; cite a real number only if the provided material contains one"
+    - "reframe the question to the decision that actually matters, then answer that"
+
+scoring:
+  weights: {relevance: 0.40, author_value: 0.15, recency: 0.15, momentum: 0.15, history: 0.15}
+  question_multiplier: 1.5
+  cooldown_days: 7
+  momentum_baseline_per_hour: 25
+  half_life_hours: {x: 6, instagram: 24, tiktok: 8}
+
+blocks:
+  llm_gate: required
+  # any figure in a draft must literally appear in the linked source material
+  numeric_provenance: true
+  claims_require_source: false
+  regex:
+    - '\bguaranteed?\s+(return|profit|outcome|income)\b'
+    - '\byou (should|need to) (buy|invest in|put money into)\b'
+    - '\brisk[- ]free\b'
+    - "\\bcan'?t lose\\b"
+    - '\bget rich\b'
+  topics:
+    - specific investment advice (what a particular person should invest in)
+    - guaranteed or promised outcomes
+    - deal figures not present in the provided source material
+    - guru energy, gatekeeping, fake scarcity
+
+funnel:
+  ratio: {top: 0.60, middle: 0.30, bottom: 0.10}
+  patterns:
+    bottom:
+      - '\bbuy\b'
+      - '\benroll\b'
+      - '\bprice\b'
+      - '\bcourse\b'
+      - '\bcheckout\b'
+      - 'link in bio to (buy|purchase|enroll|join)'
+    middle:
+      - '\bcomment (gap|capstack)\b'
+      - '\bsave this\b'
+      - '\bswipe\b'
+      - '\bthe mechanism\b'
+      - '\bhow to\b'
+      - "\\bhere'?s the\\b"
+  products:
+    - id: gap-map
+      name: "Who's-Who Deal Map (GAP lead magnet)"
+      kind: lead_magnet
+      topics: [co-gp, deal structure, seats, first deal]
+    - id: capstack-tape
+      name: "The Tape (deal flow commentary)"
+      kind: content_series
+      topics: [construction loan, capital stack, who funds development]
+
+cadence:
+  x: "5-7/week"
+  instagram: "3-4/week"
+  tiktok: "2-3/week repurposed"
+
+rate_limits:
+  x: {posts_per_day: 3, replies_per_day: 15}
+  instagram: {posts_per_day: 2, replies_per_day: 10}
+  tiktok: {posts_per_day: 1, replies_per_day: 5}

@@ -1,0 +1,13 @@
+# Test fixture — a minimal stand-in for ~/.claude/harness/social/registry/brands.yaml.
+# Kept structurally identical (same keys) so tests run fully offline and
+# independent of the real harness path.
+brands:
+  - canonical: "Empires and Egos"
+    engage_slug: empires
+    status: active
+  - canonical: "Capstacknick"
+    engage_slug: capstack
+    status: active
+  - canonical: "Stowecap"
+    engage_slug: stowecap
+    status: deprioritized

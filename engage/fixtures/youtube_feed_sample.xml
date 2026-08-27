@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns:yt="http://www.youtube.com/xml/schemas/2015" xmlns:media="http://search.yahoo.com/mrss/" xmlns="http://www.w3.org/2005/Atom">
+ <title>Sample Channel</title>
+ <entry>
+  <id>yt:video:abc123def45</id>
+  <yt:videoId>abc123def45</yt:videoId>
+  <yt:channelId>UCsamplechannel0000000000</yt:channelId>
+  <title>First sample video</title>
+  <link rel="alternate" href="https://www.youtube.com/shorts/abc123def45"/>
+  <published>2026-08-19T19:03:09+00:00</published>
+  <updated>2026-08-19T19:03:10+00:00</updated>
+  <media:group>
+   <media:title>First sample video</media:title>
+   <media:description>A short description of the first video.</media:description>
+   <media:community>
+    <media:starRating count="10" average="5.00" min="1" max="5"/>
+    <media:statistics views="717"/>
+   </media:community>
+  </media:group>
+ </entry>
+ <entry>
+  <id>yt:video:xyz789ghi01</id>
+  <yt:videoId>xyz789ghi01</yt:videoId>
+  <yt:channelId>UCsamplechannel0000000000</yt:channelId>
+  <title>Second sample video</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=xyz789ghi01"/>
+  <published>2026-08-18T12:00:00+00:00</published>
+  <updated>2026-08-18T12:00:01+00:00</updated>
+  <media:group>
+   <media:title>Second sample video</media:title>
+   <media:description>Description of the second video.</media:description>
+   <media:community>
+    <media:starRating count="4" average="5.00" min="1" max="5"/>
+    <media:statistics views="1030"/>
+   </media:community>
+  </media:group>
+ </entry>
+</feed>

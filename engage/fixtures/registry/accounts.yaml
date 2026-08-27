@@ -1,0 +1,31 @@
+# Test fixture — a minimal stand-in for ~/.claude/harness/social/registry/accounts.yaml.
+# Deliberately includes rows configured-but-disabled (capstack tiktok/x) so
+# tests can prove the eligible-platform intersection actually excludes them.
+accounts:
+  - brand: "Empires and Egos"
+    platform: instagram
+    handle: "empires.and.egos"
+    enabled: true
+  - brand: "Empires and Egos"
+    platform: tiktok
+    enabled: true
+  - brand: "Empires and Egos"
+    platform: youtube
+    channel_id: "UC9772FnuAXMVabS0gtr6cew"
+    enabled: true
+  - brand: "Capstacknick"
+    platform: instagram
+    handle: "capstacknick"
+    enabled: true
+  - brand: "Capstacknick"
+    platform: tiktok
+    enabled: false
+  - brand: "Capstacknick"
+    platform: x
+    enabled: false
+  - brand: "Stowecap"
+    platform: linkedin
+    enabled: true
+  - brand: "Stowecap"
+    platform: instagram
+    enabled: true
